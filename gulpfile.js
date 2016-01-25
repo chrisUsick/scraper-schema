@@ -53,16 +53,16 @@ gulp.task('test', ['pre-test'], function (cb) {
     });
 });
 
-gulp.task('watch', function () {
-  gulp.watch(['lib/**/*.coffee', 'test/**'], ['coffee','test']);
+gulp.task('watch', ['coffee'], function () {
+  gulp.watch(['examples/**/*.coffee', 'lib/**/*.coffee'], ['coffee']);
 });
 
 gulp.task('coffee', function(){
-  gulp.src('./lib/**/*.coffee')
+  gulp.src(['lib/**/*.coffee','examples/**/*.coffee'], {base:'./'})
     .pipe(sourcemaps.init())
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest('./dist'));
 })
 
 gulp.task('babel', ['clean'], function () {
